@@ -30,7 +30,7 @@
 ################################################################################
 
 from binary_utils.binary_converter import binary_converter
-from nbt_utils.constant.tag_ids import tag_ids
+from nbt_utils.tag_ids import tag_ids
 from nbt_utils.tag.byte_tag import byte_tag
 from nbt_utils.tag.byte_array_tag import byte_array_tag
 from nbt_utils.tag.compound_tag import compound_tag
