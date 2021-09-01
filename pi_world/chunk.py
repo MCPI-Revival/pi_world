@@ -31,7 +31,7 @@
 
 from pi_world.utils import utils
 
-class chunk:
+class Chunk:
     def __init__(self, x: int, z: int, blocks: list = [], data: list = [], sky_light: list = [], block_light: list = [], biomes: list = []) -> None:
         self.x: int = x
         self.z: int = z
