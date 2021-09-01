@@ -29,7 +29,7 @@
 #                                                                              #
 ################################################################################
 
-class utils:
+class Utils:
     @staticmethod
     def nibble_4(items: list, index: int) -> int:
         if index % 2 == 0:
