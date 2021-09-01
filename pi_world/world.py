@@ -41,8 +41,8 @@ from nbt_utils.tag.long_tag import long_tag
 from nbt_utils.tag.string_tag import string_tag
 from nbt_utils.utils.nbt_le_binary_stream import nbt_le_binary_stream
 import os
-from pi_world.chunk import chunk
-from pi_world.utils import utils
+from pi_world.chunk import Chunk
+from pi_world.utils import Utils
 import random
 import sys
 import time
@@ -68,23 +68,23 @@ class world:
         return 4 * ((x & 31) + (z & 31) * 32)
 
     def get_chunk(self, x: int, z: int) -> object:
-        i_chunk: object = chunk(x, z)
+        chunk: object = Chunk(x, z)
         file: object = open(self.chunks_path, "rb")
         index_location: int = world.get_location(x, z)
         file.seek(index_location)
         sector_count: int = binary_converter.read_unsigned_byte(file.read(1))
         offset: int = binary_converter.read_unsigned_triad_le(file.read(3))
         if sector_count == 0 and offset == 0:
-            return i_chunk
+            return chunk
         file.seek(offset << 12)
         length: int = binary_converter.read_unsigned_int_le(file.read(4))
         chunk_data: bytes = file.read(length - 4)
         file.close()
-        i_chunk.deserialize(chunk_data)
-        return i_chunk
+        chunk.deserialize(chunk_data)
+        return chunk
 
-    def set_chunk(self, i_chunk: object) -> None:
-        chunk_data: bytes = i_chunk.serialize()
+    def set_chunk(self, chunk: object) -> None:
+        chunk_data: bytes = chunk.serialize()
         file: object = open(self.chunks_path, "r+b")
         ccc: bytes = binary_converter.write_unsigned_int_le(len(chunk_data) + 4)
         ccc += chunk_data
@@ -95,7 +95,7 @@ class world:
                 ccc += b"\x00" * remaining
                 break
             size += 4096
-        index_location: int = world.get_location(i_chunk.x, i_chunk.z)
+        index_location: int = world.get_location(chunk.x, chunk.z)
         index_location_data: bytes = b""
         chunks_data: bytes = b""
         offset: int = 1
