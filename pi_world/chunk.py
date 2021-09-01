@@ -29,7 +29,7 @@
 #                                                                              #
 ################################################################################
 
-from pi_world.utils import utils
+from pi_world.utils import Utils
 
 class Chunk:
     def __init__(self, x: int, z: int, blocks: list = [], data: list = [], sky_light: list = [], block_light: list = [], biomes: list = []) -> None:
@@ -71,22 +71,22 @@ class Chunk:
         self.blocks[chunk.get_index(x, y, z)] = block_id
 
     def get_data(self, x: int, y: int, z: int) -> int:
-        return utils.nibble_4(self.data, chunk.get_index(x, y, z))
+        return Utils.nibble_4(self.data, chunk.get_index(x, y, z))
 
     def set_data(self, x: int, y: int, z: int, data: int) -> None:
-        utils.set_nibble_4(self.data, chunk.get_index(x, y, z), data)
+        Utils.set_nibble_4(self.data, chunk.get_index(x, y, z), data)
 
     def get_sky_light(self, x: int, y: int, z: int) -> int:
-        return utils.nibble_4(self.sky_light, chunk.get_index(x, y, z))
+        return Utils.nibble_4(self.sky_light, chunk.get_index(x, y, z))
 
     def set_sky_light(self, x: int, y: int, z: int, light_level: int) -> None:
-        utils.set_nibble_4(self.sky_light, chunk.get_index(x, y, z), light_level)
+        Utils.set_nibble_4(self.sky_light, chunk.get_index(x, y, z), light_level)
 
     def get_block_light(self, x: int, y: int, z: int) -> int:
-        return utils.nibble_4(self.block_light, chunk.get_index(x, y, z))
+        return Utils.nibble_4(self.block_light, chunk.get_index(x, y, z))
 
     def set_block_light(self, x: int, y: int, z: int, light_level: int) -> None:
-        utils.set_nibble_4(self.block_light, chunk.get_index(x, y, z), light_level)
+        Utils.set_nibble_4(self.block_light, chunk.get_index(x, y, z), light_level)
 
     def get_biome(self, x: int, z: int) -> int:
         return self.biomes[chunk.get_biome_index(x, z)]
