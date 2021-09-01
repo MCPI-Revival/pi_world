@@ -47,7 +47,7 @@ import random
 import sys
 import time
 
-class world:
+class World:
     def __init__(self, world_dir: str) -> None:
         self.world_dir: str = os.path.abspath(world_dir)
         self.chunks_path: str = os.path.join(self.world_dir, "chunks.dat")
