@@ -65,34 +65,34 @@ class Chunk:
         return (z << 4) + x
 
     def get_block(self, x: int, y: int, z: int) -> int:
-        return self.blocks[chunk.get_index(x, y, z)]
+        return self.blocks[Chunk.get_index(x, y, z)]
 
     def set_block(self, x: int, y: int, z: int, block_id: int) -> None:
-        self.blocks[chunk.get_index(x, y, z)] = block_id
+        self.blocks[Chunk.get_index(x, y, z)] = block_id
 
     def get_data(self, x: int, y: int, z: int) -> int:
-        return Utils.nibble_4(self.data, chunk.get_index(x, y, z))
+        return Utils.nibble_4(self.data, Chunk.get_index(x, y, z))
 
     def set_data(self, x: int, y: int, z: int, data: int) -> None:
-        Utils.set_nibble_4(self.data, chunk.get_index(x, y, z), data)
+        Utils.set_nibble_4(self.data, Chunk.get_index(x, y, z), data)
 
     def get_sky_light(self, x: int, y: int, z: int) -> int:
-        return Utils.nibble_4(self.sky_light, chunk.get_index(x, y, z))
+        return Utils.nibble_4(self.sky_light, Chunk.get_index(x, y, z))
 
     def set_sky_light(self, x: int, y: int, z: int, light_level: int) -> None:
-        Utils.set_nibble_4(self.sky_light, chunk.get_index(x, y, z), light_level)
+        Utils.set_nibble_4(self.sky_light, Chunk.get_index(x, y, z), light_level)
 
     def get_block_light(self, x: int, y: int, z: int) -> int:
-        return Utils.nibble_4(self.block_light, chunk.get_index(x, y, z))
+        return Utils.nibble_4(self.block_light, Chunk.get_index(x, y, z))
 
     def set_block_light(self, x: int, y: int, z: int, light_level: int) -> None:
-        Utils.set_nibble_4(self.block_light, chunk.get_index(x, y, z), light_level)
+        Utils.set_nibble_4(self.block_light, Chunk.get_index(x, y, z), light_level)
 
     def get_biome(self, x: int, z: int) -> int:
-        return self.biomes[chunk.get_biome_index(x, z)]
+        return self.biomes[Chunk.get_biome_index(x, z)]
 
     def set_biome(self, x: int, z: int, biome: int) -> None:
-        self.biomes[chunk.get_biome_index(x, z)] = biome
+        self.biomes[Chunk.get_biome_index(x, z)] = biome
 
     def serialize(self) -> bytes:
         return bytes(self.blocks) + bytes(self.data) + bytes(self.sky_light) + bytes(self.block_light) + bytes(self.biomes)
