@@ -60,7 +60,7 @@ class World:
         if not os.path.isfile(self.entities_path):
             self.create_entities_file()
         if not os.path.isfile(self.chunks_path):
-            file: object = open(self.chunks_path, "wb")
+            file = open(self.chunks_path, "wb")
             file.write(b"\x00" * 4096)
 
     @staticmethod
@@ -68,8 +68,8 @@ class World:
         return 4 * ((x & 31) + (z & 31) * 32)
 
     def get_chunk(self, x: int, z: int) -> object:
-        chunk: object = Chunk(x, z)
-        file: object = open(self.chunks_path, "rb")
+        chunk: Chunk = Chunk(x, z)
+        file = open(self.chunks_path, "rb")
         index_location: int = world.get_location(x, z)
         file.seek(index_location)
         sector_count: int = binary_converter.read_unsigned_byte(file.read(1))
@@ -83,9 +83,9 @@ class World:
         chunk.deserialize(chunk_data)
         return chunk
 
-    def set_chunk(self, chunk: object) -> None:
+    def set_chunk(self, chunk: Chunk) -> None:
         chunk_data: bytes = chunk.serialize()
-        file: object = open(self.chunks_path, "r+b")
+        file = open(self.chunks_path, "r+b")
         ccc: bytes = binary_converter.write_unsigned_int_le(len(chunk_data) + 4)
         ccc += chunk_data
         size: int = 0
@@ -123,8 +123,8 @@ class World:
         file.close()
 
     def create_options_file(self) -> None:
-        stream: object = nbt_le_binary_stream()
-        tag: object = compound_tag("", [
+        stream: nbt_le_binary_stream = nbt_le_binary_stream()
+        tag: compound_tag = compound_tag("", [
             int_tag("GameType", 0),
             long_tag("LastPlayed", int(time.time() * 1000)),
             string_tag("LevelName", "world"),
@@ -144,13 +144,13 @@ class World:
         result += binary_converter.write_unsigned_int_le(3)
         result += binary_converter.write_unsigned_int_le(len(stream.data))
         result += stream.data
-        file: object = open(self.options_path, "wb")
+        file = open(self.options_path, "wb")
         file.write(result)
         file.close()
 
     def create_entities_file(self) -> None:
-        stream: object = nbt_le_binary_stream()
-        tag: object = compound_tag("", [
+        stream: nbt_le_binary_stream = nbt_le_binary_stream()
+        tag: compound_tag = compound_tag("", [
             list_tag("Entities", []),
             list_tag("TileEntities", [])
         ])
@@ -159,6 +159,6 @@ class World:
         result += binary_converter.write_unsigned_int_le(1)
         result += binary_converter.write_unsigned_int_le(len(stream.data))
         result += stream.data
-        file: object = open(self.entities_path, "wb")
+        file = open(self.entities_path, "wb")
         file.write(result)
         file.close()
