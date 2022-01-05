@@ -109,7 +109,7 @@ class Chunk:
         for i in range(0, 256):
             result += b"\xff"
             for j in range(0, 8):
-                index: int = (((i & 0x0f) << 11) | (i >> 4 << 7)) + 16 * j
+                index: int = Chunk.get_index(i & 0x0f, j << 4, i >> 4)
                 result += bytes(self.blocks[index:index + 16])
                 result += bytes(self.data[(index >> 1):(index >> 1) + 8])
         return result
