@@ -106,10 +106,11 @@ class Chunk:
 
     def network_serialize(self) -> bytes:
         result: bytes = b""
-        for i in range(0, 256):
-            result += b"\xff"
-            for j in range(0, 8):
-                index: int = Chunk.get_index(i & 0x0f, j << 4, i >> 4)
-                result += bytes(self.blocks[index:index + 16])
-                result += bytes(self.data[(index >> 1):(index >> 1) + 8])
+        for z in range(16):
+            for x in range(16):
+                result += b"\xff"
+                for y in range(0, 128, 16):
+                    index: int = Chunk.get_index(x, y, z)
+                    result += bytes(self.blocks[index:index + 16])
+                    result += bytes(self.data[(index >> 1):(index >> 1) + 8])
         return result
