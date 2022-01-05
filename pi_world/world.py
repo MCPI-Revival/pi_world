@@ -70,7 +70,7 @@ class World:
     def get_chunk(self, x: int, z: int) -> object:
         chunk: Chunk = Chunk(x, z)
         file = open(self.chunks_path, "rb")
-        index_location: int = world.get_location(x, z)
+        index_location: int = World.get_location(x, z)
         file.seek(index_location)
         sector_count: int = binary_converter.read_unsigned_byte(file.read(1))
         offset: int = binary_converter.read_unsigned_triad_le(file.read(3))
@@ -95,7 +95,7 @@ class World:
                 ccc += b"\x00" * remaining
                 break
             size += 4096
-        index_location: int = world.get_location(chunk.x, chunk.z)
+        index_location: int = World.get_location(chunk.x, chunk.z)
         index_location_data: bytes = b""
         chunks_data: bytes = b""
         offset: int = 1
